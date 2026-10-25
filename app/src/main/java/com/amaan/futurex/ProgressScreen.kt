@@ -12,6 +12,8 @@ import androidx.compose.ui.unit.sp
 import java.time.LocalDate
 import android.content.Intent
 import androidx.compose.ui.platform.LocalContext
+import android.content.Intent
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun ProgressScreen(taskVm: TaskViewModel) {
@@ -41,6 +43,38 @@ fun ProgressScreen(taskVm: TaskViewModel) {
         StatCard("Focus today", Prefs.focusMinutes(LocalContext.current, today).toString() + " min", Modifier.fillMaxWidth())
         Text("Last 7 days (focus minutes)", color = FxMuted, fontSize = 12.sp)
         WeekChart(Modifier.fillMaxWidth())
+        val shareCtx = LocalContext.current
+        Button(
+            onClick = {
+                val msg = "FutureX progress: " + done + " of " + tasks.size + " tasks done. Made by Amaan"
+                val i = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, msg)
+                shareCtx.startActivity(Intent.createChooser(i, "Share progress"))
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) { Text("Share my progress") }
+        StatCard("Focus today", Prefs.focusMinutes(LocalContext.current, today).toString() + " min", Modifier.fillMaxWidth())
+        Text("Last 7 days (focus minutes)", color = FxMuted, fontSize = 12.sp)
+        WeekChart(Modifier.fillMaxWidth())
+        val shareCtx = LocalContext.current
+        Button(
+            onClick = {
+                val msg = "FutureX progress: " + done + " of " + tasks.size + " tasks done. Made by Amaan"
+                val i = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, msg)
+                shareCtx.startActivity(Intent.createChooser(i, "Share progress"))
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) { Text("Share my progress") }
+        Text("Last 7 days (focus minutes)", color = FxMuted, fontSize = 12.sp)
+        WeekChart(Modifier.fillMaxWidth())
+        val shareCtx = LocalContext.current
+        Button(
+            onClick = {
+                val msg = "FutureX progress: " + done + " of " + tasks.size + " tasks done. Made by Amaan"
+                val i = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, msg)
+                shareCtx.startActivity(Intent.createChooser(i, "Share progress"))
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) { Text("Share my progress") }
         val shareCtx = LocalContext.current
         Button(
             onClick = {

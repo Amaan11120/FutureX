@@ -32,6 +32,7 @@ fun HomeScreen(taskVm: TaskViewModel, examVm: ExamViewModel) {
         Text(if (who.isBlank()) "Welcome" else "Welcome, " + who, color = Color.White, fontSize = 18.sp)
         StatCard("Daily study goal", goal.toString() + " hours", Modifier.fillMaxWidth())
         StatCard("Focus today", Prefs.focusMinutes(ctx, today).toString() + " of " + (goal * 60) + " min", Modifier.fillMaxWidth())
+        StatCard("Focus today", Prefs.focusMinutes(ctx, today).toString() + " of " + (goal * 60) + " min", Modifier.fillMaxWidth())
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             StatCard("Pending tasks", pending.toString(), Modifier.weight(1f))
             StatCard("Upcoming exams", upcoming.size.toString(), Modifier.weight(1f))
