@@ -21,6 +21,8 @@ fun TasksScreen(vm: TaskViewModel) {
     var title by remember { mutableStateOf("") }
     var subject by remember { mutableStateOf("") }
     var picked by remember { mutableStateOf<LocalDate?>(null) }
+    var filter by remember { mutableStateOf(0) }
+    val shown = when (filter) { 1 -> tasks.filter { !it.isDone }; 2 -> tasks.filter { it.isDone }; else -> tasks }
     val context = LocalContext.current
     Column(
         Modifier.fillMaxSize().fxGradient()
@@ -50,7 +52,12 @@ fun TasksScreen(vm: TaskViewModel) {
             enabled = title.isNotBlank(),
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
         ) { Text("Add task") }
-        if (tasks.isEmpty()) {
+        Row(Modifier.padding(top = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            listOf("All", "Pending", "Completed").forEachIndexed { i, label ->
+                FilterChip(selected = filter == i, onClick = { filter = i }, label = { Text(label) })
+            }
+        }
+        if (shown.isEmpty()) {
             Text(
                 "No tasks yet. Add your first one above.",
                 color = FxMuted,
@@ -61,7 +68,7 @@ fun TasksScreen(vm: TaskViewModel) {
             Modifier.padding(top = 12.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(tasks, key = { it.id }) { TaskRow(it, vm) }
+            items(shown, key = { it.id }) { TaskRow(it, vm) }
         }
     }
 }
