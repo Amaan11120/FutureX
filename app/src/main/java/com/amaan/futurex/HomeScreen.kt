@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import java.time.LocalDate
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun HomeScreen(taskVm: TaskViewModel, examVm: ExamViewModel) {
@@ -19,12 +20,17 @@ fun HomeScreen(taskVm: TaskViewModel, examVm: ExamViewModel) {
     val pending = tasks.count { !it.isDone }
     val upcoming = exams.filter { it.dateEpochDay >= today }
     val next = upcoming.firstOrNull()
+    val ctx = LocalContext.current
+    val who = Prefs.name(ctx)
+    val goal = Prefs.goalHours(ctx)
     Column(
         Modifier.fillMaxSize().fxGradient().padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text("FutureX", color = Color.White, fontSize = 32.sp, fontWeight = FontWeight.ExtraBold)
         Text("Made by Amaan", color = FxPurple, fontSize = 12.sp)
+        Text(if (who.isBlank()) "Welcome" else "Welcome, " + who, color = Color.White, fontSize = 18.sp)
+        StatCard("Daily study goal", goal.toString() + " hours", Modifier.fillMaxWidth())
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             StatCard("Pending tasks", pending.toString(), Modifier.weight(1f))
             StatCard("Upcoming exams", upcoming.size.toString(), Modifier.weight(1f))
