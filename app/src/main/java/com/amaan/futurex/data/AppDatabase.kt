@@ -1,17 +1,33 @@
 package com.amaan.futurex.data
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [StudyTask::class], version = 1, exportSchema = false)
+private val MIGRATION_1_2 = object : Migration(1, 2) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(MIGRATION_SQL)
+    }
+}
+
+private const val MIGRATION_SQL =
+    "CREATE TABLE IF NOT EXISTS `exams` (" +
+    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+    "`name` TEXT NOT NULL, " +
+    "`dateEpochDay` INTEGER NOT NULL)"
+
+@Database(
+    entities = [StudyTask::class, Exam::class],
+    version = 2,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun studyTaskDao(): StudyTaskDao
+    abstract fun examDao(): ExamDao
 
     companion object {
-        @Volatile
-        private var instance: AppDatabase? = null
+        @Volatile private var instance: AppDatabase? = null
 
         fun get(context: Context): AppDatabase =
             instance ?: synchronized(this) {
@@ -19,7 +35,8 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "futurex.db"
-                ).build().also { instance = it }
+                ).addMigrations(MIGRATION_1_2)
+                    .build().also { instance = it }
             }
     }
 }
