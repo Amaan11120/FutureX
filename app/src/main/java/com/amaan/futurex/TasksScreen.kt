@@ -18,7 +18,7 @@ fun TasksScreen(vm: TaskViewModel) {
     var title by remember { mutableStateOf("") }
     var subject by remember { mutableStateOf("") }
     Column(
-        Modifier.fillMaxSize().background(FxBackground)
+        Modifier.fillMaxSize().fxGradient()
             .padding(horizontal = 18.dp, vertical = 24.dp)
     ) {
         Text("FutureX", color = Color.White, fontSize = 32.sp, fontWeight = FontWeight.ExtraBold)

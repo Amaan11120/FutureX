@@ -28,19 +28,7 @@ class MainActivity : ComponentActivity() {
                     surface = FxSurface
                 )
             ) {
-                var tab by remember { mutableStateOf(0) }
-                Scaffold(bottomBar = {
-                    NavigationBar {
-                        NavigationBarItem(tab == 0, { tab = 0 },
-                            { Text("T") }, label = { Text("Tasks") })
-                        NavigationBarItem(tab == 1, { tab = 1 },
-                            { Text("E") }, label = { Text("Exams") })
-                    }
-                }) { pad ->
-                    Box(Modifier.padding(pad)) {
-                        if (tab == 0) TasksScreen(taskVm) else ExamsScreen(examVm)
-                    }
-                }
+                AppNav(taskVm, examVm)
             }
         }
     }

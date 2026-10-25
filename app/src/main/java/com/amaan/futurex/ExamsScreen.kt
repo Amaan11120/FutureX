@@ -24,7 +24,7 @@ fun ExamsScreen(vm: ExamViewModel) {
     var picked by remember { mutableStateOf<LocalDate?>(null) }
     val context = LocalContext.current
     Column(
-        Modifier.fillMaxSize().background(FxBackground)
+        Modifier.fillMaxSize().fxGradient()
             .padding(horizontal = 18.dp, vertical = 24.dp)
     ) {
         Text("Exams", color = Color.White, fontSize = 28.sp)
