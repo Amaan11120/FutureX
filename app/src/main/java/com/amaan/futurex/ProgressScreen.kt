@@ -38,6 +38,8 @@ fun ProgressScreen(taskVm: TaskViewModel) {
         }
         StatCard("Overdue", overdue.toString(), Modifier.fillMaxWidth())
         StatCard("Focus today", Prefs.focusMinutes(LocalContext.current, today).toString() + " min", Modifier.fillMaxWidth())
+        Text("Last 7 days (focus minutes)", color = FxMuted, fontSize = 12.sp)
+        WeekChart(Modifier.fillMaxWidth())
         if (tasks.isEmpty()) Text("No tasks yet. Add some in Tasks.", color = FxMuted)
         LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             items(bySubject.entries.toList()) { e ->
