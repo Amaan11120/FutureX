@@ -12,6 +12,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.amaan.futurex.data.StudyTask
+import java.time.LocalDate
 
 @Composable
 fun TaskRow(task: StudyTask, vm: TaskViewModel) {
@@ -31,6 +32,10 @@ fun TaskRow(task: StudyTask, vm: TaskViewModel) {
                 )
                 if (task.subject.isNotBlank()) {
                     Text(task.subject, color = FxMuted, fontSize = 12.sp)
+                }
+                task.dueEpochDay?.let { d ->
+                    val late = d < LocalDate.now().toEpochDay() && !task.isDone
+                    Text("Due " + LocalDate.ofEpochDay(d) + if (late) " (overdue)" else "", color = if (late) FxPurple else FxMuted, fontSize = 12.sp)
                 }
             }
             TextButton({ vm.delete(task) }) { Text("Delete", color = FxPurple) }
