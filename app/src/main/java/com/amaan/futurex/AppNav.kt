@@ -39,6 +39,7 @@ fun AppNav(taskVm: TaskViewModel, examVm: ExamViewModel) {
                 0 -> HomeScreen(taskVm, examVm)
                 1 -> TasksScreen(taskVm)
                 2 -> ExamsScreen(examVm)
+                3 -> PlannerScreen(taskVm)
                 4 -> FocusScreen()
                 else -> PlaceholderScreen(tabs[tab].label)
             }
