@@ -19,4 +19,8 @@ object Prefs {
     fun setReminder(c: Context, on: Boolean, h: Int, m: Int) {
         sp(c).edit().putBoolean("rem_on", on).putInt("rem_h", h).putInt("rem_m", m).apply()
     }
+    fun blockOn(c: Context): Boolean = sp(c).getBoolean("block_on", false)
+    fun setBlockOn(c: Context, v: Boolean) { sp(c).edit().putBoolean("block_on", v).apply() }
+    fun blocked(c: Context): Set<String> = sp(c).getStringSet("blocked", emptySet()) ?: emptySet()
+    fun setBlocked(c: Context, s: Set<String>) { sp(c).edit().putStringSet("blocked", HashSet(s)).apply() }
 }
