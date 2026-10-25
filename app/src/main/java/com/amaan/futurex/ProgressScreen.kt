@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.time.LocalDate
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun ProgressScreen(taskVm: TaskViewModel) {
@@ -36,6 +37,7 @@ fun ProgressScreen(taskVm: TaskViewModel) {
             StatCard("Pending", (tasks.size - done).toString(), Modifier.weight(1f))
         }
         StatCard("Overdue", overdue.toString(), Modifier.fillMaxWidth())
+        StatCard("Focus today", Prefs.focusMinutes(LocalContext.current, today).toString() + " min", Modifier.fillMaxWidth())
         if (tasks.isEmpty()) Text("No tasks yet. Add some in Tasks.", color = FxMuted)
         LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             items(bySubject.entries.toList()) { e ->

@@ -9,9 +9,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import androidx.compose.ui.platform.LocalContext
+import java.time.LocalDate
 
 @Composable
 fun FocusScreen() {
+    val ctx = LocalContext.current
     var isBreak by remember { mutableStateOf(false) }
     var left by remember { mutableStateOf(25 * 60) }
     var running by remember { mutableStateOf(false) }
@@ -19,7 +22,8 @@ fun FocusScreen() {
         if (running && left > 0) {
             delay(1000)
             left -= 1
-        } else if (left == 0) {
+        } else if (left == 0 && running) {
+            if (!isBreak) Prefs.addFocusMinutes(ctx, LocalDate.now().toEpochDay(), 25)
             running = false
         }
     }
