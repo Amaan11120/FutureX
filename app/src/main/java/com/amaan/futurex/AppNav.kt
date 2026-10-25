@@ -36,6 +36,7 @@ fun AppNav(taskVm: TaskViewModel, examVm: ExamViewModel) {
     }) { pad ->
         Box(Modifier.padding(pad)) {
             when (tab) {
+                0 -> HomeScreen(taskVm, examVm)
                 1 -> TasksScreen(taskVm)
                 2 -> ExamsScreen(examVm)
                 else -> PlaceholderScreen(tabs[tab].label)
