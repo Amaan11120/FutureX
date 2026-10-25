@@ -29,8 +29,6 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.9'
 
       - name: Show project files
         run: |
@@ -38,7 +36,7 @@ jobs:
           find . -maxdepth 5 -type f | sort
 
       - name: Build debug APK
-        run: gradle assembleDebug --stacktrace --info
+        run: ./gradlew assembleDebug --stacktrace --info
 
       - name: Upload APK
         if: success()
