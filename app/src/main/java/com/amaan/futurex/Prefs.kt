@@ -13,4 +13,10 @@ object Prefs {
     fun addFocusMinutes(c: Context, day: Long, m: Int) {
         sp(c).edit().putInt(key(day), focusMinutes(c, day) + m).apply()
     }
+    fun reminderOn(c: Context): Boolean = sp(c).getBoolean("rem_on", false)
+    fun reminderHour(c: Context): Int = sp(c).getInt("rem_h", 18)
+    fun reminderMinute(c: Context): Int = sp(c).getInt("rem_m", 0)
+    fun setReminder(c: Context, on: Boolean, h: Int, m: Int) {
+        sp(c).edit().putBoolean("rem_on", on).putInt("rem_h", h).putInt("rem_m", m).apply()
+    }
 }

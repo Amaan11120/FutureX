@@ -42,6 +42,7 @@ fun SettingsScreen() {
             enabled = goalOk,
             modifier = Modifier.fillMaxWidth()
         ) { Text("Save") }
+        ReminderCard()
         if (saved) Text("Saved.", color = FxMuted)
         Text("FutureX 1.0 - Made by Amaan", color = FxMuted, fontSize = 12.sp)
     }
