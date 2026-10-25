@@ -11,12 +11,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import android.app.DatePickerDialog
+import androidx.compose.ui.platform.LocalContext
+import java.time.LocalDate
 
 @Composable
 fun TasksScreen(vm: TaskViewModel) {
     val tasks by vm.tasks.collectAsState()
     var title by remember { mutableStateOf("") }
     var subject by remember { mutableStateOf("") }
+    var picked by remember { mutableStateOf<LocalDate?>(null) }
+    val context = LocalContext.current
     Column(
         Modifier.fillMaxSize().fxGradient()
             .padding(horizontal = 18.dp, vertical = 24.dp)
@@ -33,8 +38,15 @@ fun TasksScreen(vm: TaskViewModel) {
             label = { Text("Subject") }, singleLine = true,
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
         )
+        OutlinedButton(
+            onClick = {
+                val t = LocalDate.now()
+                DatePickerDialog(context, { _, y, m, d -> picked = LocalDate.of(y, m + 1, d) }, t.year, t.monthValue - 1, t.dayOfMonth).show()
+            },
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+        ) { Text(picked?.toString() ?: "Due date (optional)") }
         Button(
-            onClick = { vm.add(title, subject); title = ""; subject = "" },
+            onClick = { vm.add(title, subject, picked?.toEpochDay()); title = ""; subject = ""; picked = null },
             enabled = title.isNotBlank(),
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
         ) { Text("Add task") }
