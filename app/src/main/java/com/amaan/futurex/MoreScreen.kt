@@ -17,7 +17,8 @@ fun MoreScreen(taskVm: TaskViewModel) {
             FilterChip(selected = page == 1, onClick = { page = 1 }, label = { Text("Settings") })
             FilterChip(selected = page == 2, onClick = { page = 2 }, label = { Text("Progress") })
             FilterChip(selected = page == 3, onClick = { page = 3 }, label = { Text("Blocking") })
+            FilterChip(selected = page == 4, onClick = { page = 4 }, label = { Text("Reminders") })
         }
-        when (page) { 0 -> FocusScreen(); 1 -> SettingsScreen(); 2 -> ProgressScreen(taskVm); else -> BlockScreen() }
+        when (page) { 0 -> FocusScreen(); 1 -> SettingsScreen(); 2 -> ProgressScreen(taskVm); 3 -> BlockScreen(); else -> RemindersScreen() }
     }
 }
