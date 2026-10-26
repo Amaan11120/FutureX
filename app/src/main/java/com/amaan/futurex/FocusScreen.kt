@@ -42,11 +42,13 @@ fun FocusScreen() {
     var now by remember { mutableStateOf(System.currentTimeMillis()) }
     var focusText by remember { mutableStateOf(focusMin.toString()) }
     var breakText by remember { mutableStateOf(breakMin.toString()) }
+    var blockNote by remember { mutableStateOf<String?>(null) }
 
     fun total() = (if (isBreak) breakMin else focusMin) * 60_000L
 
     fun save() {
         FocusAlarm.sync(ctx, state == RUNNING, endAt)
+        blockNote = if (state == RUNNING && !isBreak) FocusBlock.start(ctx) else { FocusBlock.stop(ctx); null }
         sp.edit().putInt("focus_min", focusMin).putInt("break_min", breakMin)
             .putBoolean("is_break", isBreak).putInt("state", state)
             .putLong("end_at", endAt).putLong("left_ms", leftMs)
@@ -114,6 +116,7 @@ fun FocusScreen() {
             isBreak = !isBreak; state = IDLE; sid = null; leftMs = total(); save()
         }) { Text(if (isBreak) "Switch to Focus" else "Switch to Break") }
 
+        blockNote?.let { Text(it, color = FxPurple, fontSize = 12.sp, textAlign = TextAlign.Center) }
         Spacer(Modifier.height(20.dp))
         if (state == IDLE) {
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {

@@ -22,6 +22,7 @@ object FocusSettle {
                 .insert(FocusSession(id, day, sp.getLong("started", endAt), focusMin))
             if (row != -1L) Prefs.addFocusMinutes(ctx, day, focusMin)
         }
+        FocusBlock.stop(ctx)
         sp.edit().putInt("state", 0).putString("sid", null)
             .putLong("left_ms", (if (isBreak) breakMin else focusMin) * 60_000L).apply()
     }
