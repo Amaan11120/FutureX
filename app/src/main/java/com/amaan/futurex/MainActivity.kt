@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     surface = FxSurface
                 )
             ) {
-                AppNav(taskVm, examVm)
+                SplashGate { AppNav(taskVm, examVm) }
             }
         }
     }
