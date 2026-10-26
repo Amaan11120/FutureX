@@ -16,3 +16,4 @@ secrets.properties
 *.iml
 .DS_Store
 app/google-services.json
+app/google-services.json
