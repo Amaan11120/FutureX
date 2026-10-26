@@ -25,7 +25,7 @@ class TaskViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun toggleDone(task: StudyTask) {
-        viewModelScope.launch { dao.update(task.copy(isDone = !task.isDone)) }
+        viewModelScope.launch { dao.update(task.copy(isDone = !task.isDone, completedAt = if (!task.isDone) System.currentTimeMillis() else null)) }
     }
 
     fun delete(task: StudyTask) {
