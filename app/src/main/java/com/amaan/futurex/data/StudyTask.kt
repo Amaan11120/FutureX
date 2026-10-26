@@ -11,5 +11,6 @@ data class StudyTask(
     val dueEpochDay: Long? = null,
     val isDone: Boolean = false,
     val createdAt: Long = System.currentTimeMillis(),
-    val dueMinutes: Int? = null
+    val dueMinutes: Int? = null,
+    val completedAt: Long? = null
 )

@@ -23,13 +23,14 @@ private val MIGRATION_2_3 = object : Migration(2, 3) {
     }
 }
 @Database(
-    entities = [StudyTask::class, Exam::class],
-    version = 3,
+    entities = [StudyTask::class, Exam::class, FocusSession::class],
+    version = 4,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun studyTaskDao(): StudyTaskDao
     abstract fun examDao(): ExamDao
+    abstract fun focusSessionDao(): FocusSessionDao
 
     companion object {
         @Volatile private var instance: AppDatabase? = null
@@ -40,8 +41,23 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "futurex.db"
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                     .build().also { instance = it }
             }
+    }
+}
+
+private val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE `study_tasks` ADD COLUMN `completedAt` INTEGER")
+        db.execSQL(
+            "CREATE TABLE IF NOT EXISTS `focus_sessions` (" +
+                "`id` TEXT NOT NULL, " +
+                "`dayEpoch` INTEGER NOT NULL, " +
+                "`startedAt` INTEGER NOT NULL, " +
+                "`minutes` INTEGER NOT NULL, " +
+                "`subject` TEXT, " +
+                "PRIMARY KEY(`id`))"
+        )
     }
 }
