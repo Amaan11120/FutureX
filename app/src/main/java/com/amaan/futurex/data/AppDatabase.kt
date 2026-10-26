@@ -23,14 +23,15 @@ private val MIGRATION_2_3 = object : Migration(2, 3) {
     }
 }
 @Database(
-    entities = [StudyTask::class, Exam::class, FocusSession::class],
-    version = 4,
+    entities = [StudyTask::class, Exam::class, FocusSession::class, XpEvent::class, Achievement::class],
+    version = 5,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun studyTaskDao(): StudyTaskDao
     abstract fun examDao(): ExamDao
     abstract fun focusSessionDao(): FocusSessionDao
+    abstract fun xpDao(): XpDao
 
     companion object {
         @Volatile private var instance: AppDatabase? = null
@@ -41,7 +42,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "futurex.db"
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                     .build().also { instance = it }
             }
     }
@@ -59,5 +60,12 @@ private val MIGRATION_3_4 = object : Migration(3, 4) {
                 "`subject` TEXT, " +
                 "PRIMARY KEY(`id`))"
         )
+    }
+}
+
+private val MIGRATION_4_5 = object : Migration(4, 5) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("CREATE TABLE IF NOT EXISTS `xp_events` (`id` TEXT NOT NULL, `xp` INTEGER NOT NULL, `at` INTEGER NOT NULL, PRIMARY KEY(`id`))")
+        db.execSQL("CREATE TABLE IF NOT EXISTS `achievements` (`id` TEXT NOT NULL, `unlockedAt` INTEGER NOT NULL, PRIMARY KEY(`id`))")
     }
 }
