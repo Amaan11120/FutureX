@@ -17,9 +17,14 @@ private const val MIGRATION_SQL =
     "`name` TEXT NOT NULL, " +
     "`dateEpochDay` INTEGER NOT NULL)"
 
+private val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE `study_tasks` ADD COLUMN `dueMinutes` INTEGER")
+    }
+}
 @Database(
     entities = [StudyTask::class, Exam::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -35,7 +40,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "futurex.db"
-                ).addMigrations(MIGRATION_1_2)
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                     .build().also { instance = it }
             }
     }

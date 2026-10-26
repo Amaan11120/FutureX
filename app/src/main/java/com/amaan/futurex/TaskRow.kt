@@ -35,7 +35,7 @@ fun TaskRow(task: StudyTask, vm: TaskViewModel) {
                 }
                 task.dueEpochDay?.let { d ->
                     val late = d < LocalDate.now().toEpochDay() && !task.isDone
-                    Text("Due " + LocalDate.ofEpochDay(d) + if (late) " (overdue)" else "", color = if (late) FxPurple else FxMuted, fontSize = 12.sp)
+                    Text("Due " + LocalDate.ofEpochDay(d) + (task.dueMinutes?.let { String.format(" %02d:%02d", it / 60, it % 60) } ?: "") + if (late) " (overdue)" else "", color = if (late) FxPurple else FxMuted, fontSize = 12.sp)
                 }
             }
             TextButton({ vm.delete(task) }) { Text("Delete", color = FxPurple) }

@@ -14,7 +14,7 @@ object Backup {
         val tasks = JSONArray()
         for (t in db.studyTaskDao().observeAll().first()) {
             tasks.put(JSONObject().put("title", t.title).put("subject", t.subject)
-                .put("due", t.dueEpochDay ?: JSONObject.NULL).put("done", t.isDone))
+                .put("due", t.dueEpochDay ?: JSONObject.NULL).put("min", t.dueMinutes ?: JSONObject.NULL).put("done", t.isDone))
         }
         val exams = JSONArray()
         for (e in db.examDao().observeAll().first()) {
@@ -34,7 +34,7 @@ object Backup {
             val o = ta.getJSONObject(i)
             val due = if (o.isNull("due")) null else o.getLong("due")
             val t = StudyTask(title = o.getString("title"), subject = o.getString("subject"),
-                dueEpochDay = due, isDone = o.getBoolean("done"))
+                dueEpochDay = due, isDone = o.getBoolean("done"), dueMinutes = if (o.isNull("min")) null else o.getInt("min"))
             if (oldTasks.none { it.title == t.title && it.subject == t.subject && it.dueEpochDay == t.dueEpochDay }) {
                 db.studyTaskDao().insert(t); added++
             }

@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import androidx.compose.ui.platform.LocalContext
 import java.time.LocalDate
 
@@ -21,6 +22,7 @@ fun TasksScreen(vm: TaskViewModel) {
     var title by remember { mutableStateOf("") }
     var subject by remember { mutableStateOf("") }
     var picked by remember { mutableStateOf<LocalDate?>(null) }
+    var pickedMin by remember { mutableStateOf<Int?>(null) }
     var filter by remember { mutableStateOf(0) }
     val shown = when (filter) { 1 -> tasks.filter { !it.isDone }; 2 -> tasks.filter { it.isDone }; else -> tasks }
     val context = LocalContext.current
@@ -47,8 +49,13 @@ fun TasksScreen(vm: TaskViewModel) {
             },
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
         ) { Text(picked?.toString() ?: "Due date (optional)") }
+        OutlinedButton(
+            onClick = { TimePickerDialog(context, { _, h, m -> pickedMin = h * 60 + m }, 9, 0, true).show() },
+            enabled = picked != null,
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+        ) { Text(pickedMin?.let { String.format("%02d:%02d", it / 60, it % 60) } ?: "Due time (optional)") }
         Button(
-            onClick = { vm.add(title, subject, picked?.toEpochDay()); title = ""; subject = ""; picked = null },
+            onClick = { vm.add(title, subject, picked?.toEpochDay(), pickedMin); title = ""; subject = ""; picked = null; pickedMin = null },
             enabled = title.isNotBlank(),
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
         ) { Text("Add task") }
