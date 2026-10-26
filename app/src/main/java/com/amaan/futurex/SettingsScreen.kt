@@ -45,6 +45,7 @@ fun SettingsScreen(onSignedOut: () -> Unit) {
             enabled = goalOk,
             modifier = Modifier.fillMaxWidth()
         ) { Text("Save") }
+        ThemeCard()
         BackupCard()
         ReminderCard()
         if (saved) Text("Saved.", color = FxMuted)

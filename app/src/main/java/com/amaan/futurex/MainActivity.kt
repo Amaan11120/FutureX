@@ -16,6 +16,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FxTheme.init(this)
         ReminderScheduler.schedule(this)
         Thread { kotlinx.coroutines.runBlocking { LegacyImport.run(applicationContext); FocusSettle.run(applicationContext) } }.start()
         if (android.os.Build.VERSION.SDK_INT >= 33) {
@@ -26,7 +27,8 @@ class MainActivity : ComponentActivity() {
                 colorScheme = darkColorScheme(
                     primary = FxPurple,
                     background = FxBackground,
-                    surface = FxSurface
+                    surface = FxSurface,
+                        secondaryContainer = FxPurple.copy(alpha = 0.25f)
                 )
             ) {
                 SplashGate {

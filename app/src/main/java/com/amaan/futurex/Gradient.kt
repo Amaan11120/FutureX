@@ -7,6 +7,6 @@ import androidx.compose.ui.graphics.Color
 
 fun Modifier.fxGradient(): Modifier = background(
     Brush.verticalGradient(
-        listOf(Color(0xFF2A1250), FxBackground, FxBackground)
+        listOf(FxTop, FxBackground, FxBackground)
     )
 )
