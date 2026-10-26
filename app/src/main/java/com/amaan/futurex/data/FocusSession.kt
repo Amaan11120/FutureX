@@ -23,6 +23,9 @@ interface FocusSessionDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(s: FocusSession): Long
 
+    @Query("SELECT COALESCE(SUM(minutes), 0) FROM focus_sessions WHERE dayEpoch = :day AND id NOT LIKE 'legacy-%'")
+    suspend fun realMinutes(day: Long): Int
+
     @Query("SELECT * FROM focus_sessions ORDER BY startedAt")
     fun all(): Flow<List<FocusSession>>
 }

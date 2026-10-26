@@ -17,6 +17,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ReminderScheduler.schedule(this)
+        Thread { kotlinx.coroutines.runBlocking { LegacyImport.run(applicationContext) } }.start()
         if (android.os.Build.VERSION.SDK_INT >= 33) {
             requestPermissions(arrayOf("android.permission.POST_NOTIFICATIONS"), 1)
         }
