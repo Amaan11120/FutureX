@@ -17,6 +17,8 @@ import kotlinx.coroutines.delay
 import java.time.Instant
 import java.time.ZoneId
 import java.util.UUID
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 
 private const val IDLE = 0
 private const val RUNNING = 1
@@ -25,6 +27,7 @@ private const val PAUSED = 2
 @Composable
 fun FocusScreen() {
     val ctx = LocalContext.current
+    val haptic = LocalHapticFeedback.current
     val sp = remember { ctx.getSharedPreferences("fx_focus", Context.MODE_PRIVATE) }
     var focusMin by remember { mutableStateOf(sp.getInt("focus_min", 25)) }
     var breakMin by remember { mutableStateOf(sp.getInt("break_min", 5)) }
@@ -82,9 +85,12 @@ fun FocusScreen() {
     ) {
         Text(if (isBreak) "Break" else "Focus", color = FxMuted, fontSize = 16.sp)
         Text(String.format("%02d:%02d", sec / 60, sec % 60), color = Color.White, fontSize = 64.sp)
+        Spacer(Modifier.height(12.dp))
+        LinearProgressIndicator(progress = 1f - (remaining.toFloat() / total().toFloat()).coerceIn(0f, 1f), modifier = Modifier.fillMaxWidth(0.7f).height(6.dp), color = FxPurple, trackColor = FxSurface)
         Row(Modifier.padding(top = 24.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Button(
                 onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     if (state == RUNNING) {
                         leftMs = (endAt - System.currentTimeMillis()).coerceIn(0L, total())
                         state = PAUSED
