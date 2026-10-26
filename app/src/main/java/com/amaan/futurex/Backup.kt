@@ -1,12 +1,12 @@
+package com.amaan.futurex
 
-object Backup {
-    suspend fun export(c: Context): String {
-        val db = AppDatabase.get(c)
-        val tasks = JSONArray()
-        for (t in db.studyTaskDao().observeAll().first()) {
-            tasks.put(JSONObject().put("title", t.title).put("subject", t.subject)
-                .put("due", t.dueEpochDay ?: JSONObject.NULL).put("done", t.isDone))
-        }
+import android.content.Context
+import com.amaan.futurex.data.AppDatabase
+import com.amaan.futurex.data.Exam
+import com.amaan.futurex.data.StudyTask
+import kotlinx.coroutines.flow.first
+import org.json.JSONArray
+import org.json.JSONObject
 
 object Backup {
     suspend fun export(c: Context): String {
