@@ -46,6 +46,7 @@ fun FocusScreen() {
     fun total() = (if (isBreak) breakMin else focusMin) * 60_000L
 
     fun save() {
+        FocusAlarm.sync(ctx, state == RUNNING, endAt)
         sp.edit().putInt("focus_min", focusMin).putInt("break_min", breakMin)
             .putBoolean("is_break", isBreak).putInt("state", state)
             .putLong("end_at", endAt).putLong("left_ms", leftMs)

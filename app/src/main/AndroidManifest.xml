@@ -41,5 +41,6 @@
             android:exported="false"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.FutureX" />
+        <receiver android:name=".FocusAlarmReceiver" android:exported="false" />
     </application>
 </manifest>
