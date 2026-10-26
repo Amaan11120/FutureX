@@ -3,9 +3,21 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
 }
 
 android {
+    signingConfigs {
+        getByName("debug") {
+            val p = System.getenv("KEYSTORE_PATH")
+            if (p != null) {
+                storeFile = file(p)
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = "futurex"
+                keyPassword = System.getenv("KEYSTORE_PASSWORD")
+            }
+        }
+    }
     namespace = "com.amaan.futurex"
     compileSdk = 34
 
@@ -62,5 +74,11 @@ dependencies {
     ksp("androidx.room:room-compiler:2.6.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    implementation(platform("com.google.firebase:firebase-bom:35.1.0"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("androidx.credentials:credentials:1.3.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
     implementation("androidx.work:work-runtime-ktx:2.9.1")
 }

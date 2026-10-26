@@ -35,7 +35,18 @@ jobs:
           pwd
           find . -maxdepth 5 -type f | sort
 
+      - name: Restore secrets
+        env:
+          KS: ${{ secrets.KEYSTORE_B64 }}
+          GS: ${{ secrets.GOOGLE_SERVICES_B64 }}
+        run: |
+          echo "$KS" | base64 -d > "$RUNNER_TEMP/futurex.jks"
+          echo "$GS" | base64 -d > app/google-services.json
+          echo "KEYSTORE_PATH=$RUNNER_TEMP/futurex.jks" >> "$GITHUB_ENV"
+
       - name: Build debug APK
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: ./gradlew assembleDebug --stacktrace --info
 
       - name: Upload APK
