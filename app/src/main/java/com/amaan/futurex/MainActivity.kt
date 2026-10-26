@@ -30,7 +30,8 @@ class MainActivity : ComponentActivity() {
             ) {
                 SplashGate {
                     var user by remember { mutableStateOf(AuthManager.currentUser()) }
-                    if (user == null) LoginScreen { user = AuthManager.currentUser() } else AppNav(taskVm, examVm) { user = null }
+                    val u = user
+                    if (u == null) LoginScreen { user = AuthManager.currentUser() } else OwnerGate(u.uid, { user = null }) { AppNav(taskVm, examVm) { user = null } }
                 }
             }
         }
