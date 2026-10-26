@@ -19,7 +19,8 @@ class TaskViewModel(app: Application) : AndroidViewModel(app) {
     fun add(title: String, subject: String, due: Long? = null, dueMin: Int? = null) {
         if (title.isBlank()) return
         viewModelScope.launch {
-            dao.insert(StudyTask(title = title.trim(), subject = subject.trim(), dueEpochDay = due, dueMinutes = dueMin))
+            val newId = dao.insert(StudyTask(title = title.trim(), subject = subject.trim(), dueEpochDay = due, dueMinutes = dueMin))
+            if (due != null && dueMin != null) TaskAlarm.schedule(getApplication<Application>(), newId, due, dueMin)
         }
     }
 
@@ -28,6 +29,6 @@ class TaskViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun delete(task: StudyTask) {
-        viewModelScope.launch { dao.delete(task) }
+        viewModelScope.launch { dao.delete(task); TaskAlarm.cancel(getApplication<Application>(), task.id) }
     }
 }
