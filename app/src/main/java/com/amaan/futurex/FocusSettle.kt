@@ -21,6 +21,7 @@ object FocusSettle {
             val row = AppDatabase.get(ctx).focusSessionDao()
                 .insert(FocusSession(id, day, sp.getLong("started", endAt), focusMin))
             if (row != -1L) Prefs.addFocusMinutes(ctx, day, focusMin)
+            XpService.focus(ctx, id, focusMin)
         }
         FocusBlock.stop(ctx)
         sp.edit().putInt("state", 0).putString("sid", null)

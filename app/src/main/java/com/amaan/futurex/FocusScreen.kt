@@ -62,6 +62,7 @@ fun FocusScreen() {
                 val day = Instant.ofEpochMilli(endAt).atZone(ZoneId.systemDefault()).toLocalDate().toEpochDay()
                 val row = AppDatabase.get(ctx).focusSessionDao().insert(FocusSession(id, day, startedAt, focusMin))
                 if (row != -1L) Prefs.addFocusMinutes(ctx, day, focusMin)
+                XpService.focus(ctx, id, focusMin)
             }
         }
         sid = null
