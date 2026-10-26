@@ -20,7 +20,7 @@ private val tabs = listOf(
 )
 
 @Composable
-fun AppNav(taskVm: TaskViewModel, examVm: ExamViewModel) {
+fun AppNav(taskVm: TaskViewModel, examVm: ExamViewModel, onSignedOut: () -> Unit) {
     var tab by remember { mutableStateOf(0) }
     Scaffold(bottomBar = {
         NavigationBar {
@@ -40,7 +40,7 @@ fun AppNav(taskVm: TaskViewModel, examVm: ExamViewModel) {
                 1 -> TasksScreen(taskVm)
                 2 -> ExamsScreen(examVm)
                 3 -> PlannerScreen(taskVm)
-                4 -> MoreScreen(taskVm)
+                4 -> MoreScreen(taskVm, onSignedOut)
                 else -> PlaceholderScreen(tabs[tab].label)
             }
         }

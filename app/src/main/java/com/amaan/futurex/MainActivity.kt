@@ -28,7 +28,10 @@ class MainActivity : ComponentActivity() {
                     surface = FxSurface
                 )
             ) {
-                SplashGate { AppNav(taskVm, examVm) }
+                SplashGate {
+                    var user by remember { mutableStateOf(AuthManager.currentUser()) }
+                    if (user == null) LoginScreen { user = AuthManager.currentUser() } else AppNav(taskVm, examVm) { user = null }
+                }
             }
         }
     }

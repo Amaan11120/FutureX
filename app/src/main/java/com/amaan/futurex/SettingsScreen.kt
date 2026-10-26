@@ -10,9 +10,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(onSignedOut: () -> Unit) {
     val ctx = LocalContext.current
     var name by remember { mutableStateOf(Prefs.name(ctx)) }
     var goal by remember { mutableStateOf(Prefs.goalHours(ctx).toString()) }
@@ -47,6 +48,8 @@ fun SettingsScreen() {
         BackupCard()
         ReminderCard()
         if (saved) Text("Saved.", color = FxMuted)
+        val scope = rememberCoroutineScope()
+        OutlinedButton(onClick = { scope.launch { AuthManager.signOut(ctx); onSignedOut() } }, modifier = Modifier.fillMaxWidth()) { Text("Sign out") }
         Text("FutureX 1.0 - Made by Amaan", color = FxMuted, fontSize = 12.sp)
     }
 }

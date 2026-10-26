@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MoreScreen(taskVm: TaskViewModel) {
+fun MoreScreen(taskVm: TaskViewModel, onSignedOut: () -> Unit) {
     var page by remember { mutableStateOf(0) }
     Column(Modifier.fillMaxSize().fxGradient()) {
         Row(Modifier.horizontalScroll(rememberScrollState()).padding(16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -19,6 +19,6 @@ fun MoreScreen(taskVm: TaskViewModel) {
             FilterChip(selected = page == 3, onClick = { page = 3 }, label = { Text("Blocking") })
             FilterChip(selected = page == 4, onClick = { page = 4 }, label = { Text("Reminders") })
         }
-        when (page) { 0 -> FocusScreen(); 1 -> SettingsScreen(); 2 -> ProgressScreen(taskVm); 3 -> BlockScreen(); else -> RemindersScreen() }
+        when (page) { 0 -> FocusScreen(); 1 -> SettingsScreen(onSignedOut); 2 -> ProgressScreen(taskVm); 3 -> BlockScreen(); else -> RemindersScreen() }
     }
 }
