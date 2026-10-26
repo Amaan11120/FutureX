@@ -60,6 +60,7 @@ fun BlockScreen() {
             )
             Text("  Blocking on", color = Color.White)
         }
+        BlockScheduleCard()
         Text("Apps to block (" + picked.size + " selected)", color = FxMuted)
         LazyColumn(Modifier.weight(1f)) {
             items(apps) { a ->

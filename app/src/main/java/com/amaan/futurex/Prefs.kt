@@ -23,4 +23,10 @@ object Prefs {
     fun setBlockOn(c: Context, v: Boolean) { sp(c).edit().putBoolean("block_on", v).apply() }
     fun blocked(c: Context): Set<String> = sp(c).getStringSet("blocked", emptySet()) ?: emptySet()
     fun setBlocked(c: Context, s: Set<String>) { sp(c).edit().putStringSet("blocked", HashSet(s)).apply() }
+    fun schedOn(c: Context): Boolean = sp(c).getBoolean("sch_on", false)
+    fun schedStart(c: Context): Int = sp(c).getInt("sch_s", 9 * 60)
+    fun schedEnd(c: Context): Int = sp(c).getInt("sch_e", 17 * 60)
+    fun setSched(c: Context, on: Boolean, s: Int, e: Int) {
+        sp(c).edit().putBoolean("sch_on", on).putInt("sch_s", s).putInt("sch_e", e).apply()
+    }
 }

@@ -42,7 +42,7 @@ class BlockService : Service() {
                 ev.getNextEvent(e)
                 if (e.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) last = e.packageName
             }
-            if (last in Prefs.blocked(this)) openBlock()
+            if (last in Prefs.blocked(this) && BlockSchedule.active(this)) openBlock()
             Thread.sleep(1000)
         }
     }
