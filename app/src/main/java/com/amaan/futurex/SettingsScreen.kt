@@ -1,6 +1,8 @@
 package com.amaan.futurex
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -16,7 +18,7 @@ fun SettingsScreen() {
     var goal by remember { mutableStateOf(Prefs.goalHours(ctx).toString()) }
     var saved by remember { mutableStateOf(false) }
     Column(
-        Modifier.fillMaxSize().fxGradient().padding(20.dp),
+        Modifier.fillMaxSize().fxGradient().verticalScroll(rememberScrollState()).padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Text("Settings", color = Color.White, fontSize = 28.sp)
@@ -42,6 +44,7 @@ fun SettingsScreen() {
             enabled = goalOk,
             modifier = Modifier.fillMaxWidth()
         ) { Text("Save") }
+        BackupCard()
         ReminderCard()
         if (saved) Text("Saved.", color = FxMuted)
         Text("FutureX 1.0 - Made by Amaan", color = FxMuted, fontSize = 12.sp)
