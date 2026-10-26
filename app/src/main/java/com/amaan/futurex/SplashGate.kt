@@ -9,6 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 @Composable
@@ -27,7 +31,7 @@ fun SplashGate(content: @Composable () -> Unit) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("FutureX", color = Color.White, fontSize = 48.sp, fontWeight = FontWeight.ExtraBold)
+        Image(painterResource(R.drawable.futurex_logo), "FutureX logo", Modifier.size(220.dp))
         Text("Plan - Study - Achieve", color = FxMuted, fontSize = 14.sp)
         Text("Made by Amaan", color = FxPurple, fontSize = 12.sp)
     }

@@ -10,6 +10,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import java.time.LocalDate
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.platform.LocalContext
 
 @Composable
@@ -27,7 +29,7 @@ fun HomeScreen(taskVm: TaskViewModel, examVm: ExamViewModel) {
         Modifier.fillMaxSize().fxGradient().padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Text("FutureX", color = Color.White, fontSize = 32.sp, fontWeight = FontWeight.ExtraBold)
+        Image(painterResource(R.drawable.futurex_logo), "FutureX logo", Modifier.size(96.dp))
         Text("Made by Amaan", color = FxPurple, fontSize = 12.sp)
         Text(if (who.isBlank()) "Welcome" else "Welcome, " + who, color = Color.White, fontSize = 18.sp)
         StatCard("Daily study goal", goal.toString() + " hours", Modifier.fillMaxWidth())
