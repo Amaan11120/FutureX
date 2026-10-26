@@ -16,6 +16,7 @@ private val tabs = listOf(
     Tab("Tasks", Icons.Filled.CheckCircle),
     Tab("Exams", Icons.Filled.DateRange),
     Tab("Planner", Icons.Filled.Star),
+    Tab("Settings", Icons.Filled.Settings),
     Tab("More", Icons.Filled.Menu)
 )
 
@@ -40,7 +41,8 @@ fun AppNav(taskVm: TaskViewModel, examVm: ExamViewModel, onSignedOut: () -> Unit
                 1 -> TasksScreen(taskVm)
                 2 -> ExamsScreen(examVm)
                 3 -> PlannerScreen(taskVm)
-                4 -> MoreScreen(taskVm, onSignedOut)
+                4 -> SettingsScreen(onSignedOut)
+                5 -> MoreScreen(taskVm, onSignedOut)
                 else -> PlaceholderScreen(tabs[tab].label)
             }
         }
