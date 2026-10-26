@@ -117,6 +117,7 @@ fun FocusScreen() {
         }) { Text(if (isBreak) "Switch to Focus" else "Switch to Break") }
 
         blockNote?.let { Text(it, color = FxPurple, fontSize = 12.sp, textAlign = TextAlign.Center) }
+        if (!hasNotifAccess(ctx)) TextButton(onClick = { ctx.startActivity(android.content.Intent(android.provider.Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)) }) { Text("Allow hiding blocked apps' notifications") }
         Spacer(Modifier.height(20.dp))
         if (state == IDLE) {
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
