@@ -11,6 +11,9 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import androidx.compose.ui.platform.LocalContext
 import java.time.LocalDate
+import java.util.UUID
+import com.amaan.futurex.data.AppDatabase
+import com.amaan.futurex.data.FocusSession
 
 @Composable
 fun FocusScreen() {
@@ -18,12 +21,20 @@ fun FocusScreen() {
     var isBreak by remember { mutableStateOf(false) }
     var left by remember { mutableStateOf(25 * 60) }
     var running by remember { mutableStateOf(false) }
+    var sessionId by remember { mutableStateOf<String?>(null) }
+    var startedAt by remember { mutableStateOf(0L) }
     LaunchedEffect(running, left) {
         if (running && left > 0) {
+            if (sessionId == null && !isBreak) { sessionId = UUID.randomUUID().toString(); startedAt = System.currentTimeMillis() }
             delay(1000)
             left -= 1
         } else if (left == 0 && running) {
-            if (!isBreak) Prefs.addFocusMinutes(ctx, LocalDate.now().toEpochDay(), 25)
+            if (!isBreak) {
+                Prefs.addFocusMinutes(ctx, LocalDate.now().toEpochDay(), 25)
+                val id = sessionId
+                if (id != null) AppDatabase.get(ctx).focusSessionDao().insert(FocusSession(id, LocalDate.now().toEpochDay(), startedAt, 25))
+                sessionId = null
+            }
             running = false
         }
     }
