@@ -19,6 +19,9 @@ class ReminderWorker(
     override suspend fun doWork(): Result {
         val dao = AppDatabase.get(ctx).examDao()
         val today = LocalDate.now().toEpochDay()
+        for (t in AppDatabase.get(ctx).studyTaskDao().observeAll().first()) {
+            if (!t.isDone && t.dueEpochDay == today) notify(100000 + t.id, "Task due today", t.title)
+        }
         for (exam in dao.observeAll().first()) {
             if (exam.dateEpochDay == today) {
                 notify(exam.id * 2, "Exam today", exam.name)

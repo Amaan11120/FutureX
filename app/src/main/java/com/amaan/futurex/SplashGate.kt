@@ -33,6 +33,6 @@ fun SplashGate(content: @Composable () -> Unit) {
     ) {
         Image(painterResource(R.drawable.futurex_logo), "FutureX logo", Modifier.size(220.dp))
         Text("Plan - Study - Achieve", color = FxMuted, fontSize = 14.sp)
-        Text("Made by Amaan", color = FxPurple, fontSize = 12.sp)
+        Text("Made by Amaan", color = FxPurple, fontSize = 14.sp, style = androidx.compose.ui.text.TextStyle(shadow = androidx.compose.ui.graphics.Shadow(FxPurple, blurRadius = 16f)))
     }
 }

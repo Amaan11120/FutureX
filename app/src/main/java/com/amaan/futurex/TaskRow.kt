@@ -19,7 +19,7 @@ fun TaskRow(task: StudyTask, vm: TaskViewModel) {
     Card(
         colors = CardDefaults.cardColors(containerColor = FxSurface),
         shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().neon()
     ) {
         Row(Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
             Checkbox(task.isDone, { vm.toggleDone(task) })

@@ -26,7 +26,7 @@ fun ExamCard(exam: Exam, vm: ExamViewModel) {
     Card(
         colors = CardDefaults.cardColors(containerColor = FxSurface),
         shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).neon()
     ) {
         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {

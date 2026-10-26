@@ -15,7 +15,7 @@ fun StatCard(label: String, value: String, modifier: Modifier = Modifier) {
     Card(
         colors = CardDefaults.cardColors(containerColor = FxSurface),
         shape = RoundedCornerShape(16.dp),
-        modifier = modifier
+        modifier = modifier.neon()
     ) {
         Column(Modifier.padding(16.dp)) {
             Text(label, color = FxMuted, fontSize = 12.sp)
