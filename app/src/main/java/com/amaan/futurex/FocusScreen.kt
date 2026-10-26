@@ -85,7 +85,7 @@ fun FocusScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(if (isBreak) "Break" else "Focus", color = FxMuted, fontSize = 16.sp)
-        Text(String.format("%02d:%02d", sec / 60, sec % 60), color = Color.White, fontSize = 64.sp)
+        Text(String.format("%02d:%02d", sec / 60, sec % 60), color = Color.White, fontSize = 64.sp, modifier = Modifier.movingGlow())
         Spacer(Modifier.height(12.dp))
         LinearProgressIndicator(progress = 1f - (remaining.toFloat() / total().toFloat()).coerceIn(0f, 1f), modifier = Modifier.fillMaxWidth(0.7f).height(6.dp), color = FxPurple, trackColor = FxSurface)
         Row(Modifier.padding(top = 24.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {

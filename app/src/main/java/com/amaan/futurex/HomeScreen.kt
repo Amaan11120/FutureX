@@ -29,7 +29,7 @@ fun HomeScreen(taskVm: TaskViewModel, examVm: ExamViewModel) {
         Modifier.fillMaxSize().fxGradient().padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Image(painterResource(R.drawable.futurex_logo), "FutureX logo", Modifier.size(72.dp).align(androidx.compose.ui.Alignment.CenterHorizontally))
+        Image(painterResource(R.drawable.futurex_logo), "FutureX logo", Modifier.size(72.dp).movingGlow().align(androidx.compose.ui.Alignment.CenterHorizontally))
         Text("Made by Amaan", color = FxPurple, fontSize = 12.sp)
         Text(androidx.compose.ui.text.buildAnnotatedString { append(if (who.isBlank()) "Welcome" else "Welcome, "); if (who.isNotBlank()) { pushStyle(androidx.compose.ui.text.SpanStyle(fontWeight = FontWeight.Bold, fontSize = 24.sp)); append(who); pop() } }, color = Color.White, fontSize = 20.sp)
         StatCard("Daily study goal", goal.toString() + " hours", Modifier.fillMaxWidth())

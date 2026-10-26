@@ -28,7 +28,7 @@ fun LoginScreen(onSignedIn: () -> Unit) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(painterResource(R.drawable.futurex_logo), "FutureX logo", Modifier.size(160.dp))
+        Image(painterResource(R.drawable.futurex_logo), "FutureX logo", Modifier.size(160.dp).movingGlow())
         Spacer(Modifier.height(16.dp))
         Text("Welcome to FutureX", color = Color.White, fontSize = 28.sp, textAlign = TextAlign.Center)
         Spacer(Modifier.height(8.dp))
